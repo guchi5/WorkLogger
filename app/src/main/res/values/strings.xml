@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">WorkLogger</string>
+    <string name="start_working">Start working</string>
+    <string name="stop_working">Stop working</string>
+
+    <string name="dialog_alert_title">WorkLogger Error</string>
+    <string name="dialog_alert_accept">OK</string>
+
+    <!-- Strings related to Time Editor dialog -->
+    <string name="time_editor_title">Edit Work Record</string>
+    <string name="time_editor_edit_message_format">Edit a work record on %s</string>
+    <string name="time_editor_yes">Update</string>
+    <string name="time_editor_cancel">Cancel</string>
+
+    <!-- Strings related to About dialog -->
+    <string name="menu_app_about_title">About WorkLogger</string>
+    <string name="app_about_description">
+ WorkLogger is a simplified version of iWorkedHarder for recording your work hours.
+        You are welcome to modify and improve this tool for your study and own use.
+    </string>
+    <string name="app_about_credits">
+        WorkLogger 0.1\n
+        Copyright(C) 2018-2020\n
+        Masanobu UMEDA\n
+        umerin@ci.kyutech.ac.jp
+    </string>
+    <string name="app_about_yes">Yes</string>
+</resources>
