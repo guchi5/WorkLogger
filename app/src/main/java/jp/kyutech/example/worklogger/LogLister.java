@@ -124,7 +124,11 @@ class LogLister
     }
     recordManager.updateWorkRecord(record);
   }
-
+  private void deleteTimeRecord(WorkRecord record){
+      // TODO deleteTimeRecordの実装
+      recordManager.deleteWorkRecord(record);
+      Log.d(LOGTAG, "deleteの呼び出し");
+  }
   private Time getTimeOfButton(Button button)
   {
     Time time = null;
@@ -196,6 +200,9 @@ class LogLister
                                               int i)
                           {
                               // Nothing to do.
+                              deleteTimeRecord(record);
+                              updateListView();
+
                           }
                       });
     builder.create();

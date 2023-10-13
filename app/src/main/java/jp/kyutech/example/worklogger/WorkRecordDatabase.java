@@ -207,7 +207,7 @@ public class WorkRecordDatabase extends SQLiteOpenHelper
                //         values,
                //         FIELD_ID + " = ?",
                //         new String[]{String.valueOf(record.getId())});
-            db.delete(TABLE_WORKRECORDS,FIELD_ID + " = ?",null);
+            db.delete(TABLE_WORKRECORDS,FIELD_ID + " = ?",new String[]{String.valueOf(record.getId())});
     } finally {
       db.close();
     }
