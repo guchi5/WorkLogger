@@ -20,18 +20,9 @@ import android.widget.TimePicker;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-/**
- * LogLister class which implements
- * AdapterView.OnItemLongClickListener shows a list of work hours and
- * allows to edit them.
- *
- * @author Masanobu UMEDA
- * @version $Revision$
- */
-
 class LogLister
   implements AdapterView.OnItemLongClickListener
 {
@@ -41,6 +32,8 @@ class LogLister
   private WorkRecordManager	recordManager = null;
   private ArrayList<String> last_items = null;
   private AlertDialog alertDialog = null;
+
+
 
   LogLister(MainActivity activity,
             ListView logList,
@@ -74,6 +67,8 @@ class LogLister
 
     // Create a list of items to be displayed.
     ArrayList<String> items = new ArrayList<>();
+    String sub_hours = null;
+
     for(WorkRecord record : records){
       String checkin_time = record.getCheckinTimeAsString("        ");
       String checkout_time = record.getCheckoutTimeAsString("        ");
@@ -82,9 +77,28 @@ class LogLister
       System.out.println("Checkin : " + checkin_time);
       System.out.println("Checkout: " + checkout_time);
 
+      if(!checkin_time.equals("        ") && !checkout_time.equals("        ")){
+          Calendar st = GregorianCalendar.getInstance();
+          Calendar lt = GregorianCalendar.getInstance();
+          int st_hour = Integer.valueOf(checkin_time.split(":")[0]);
+          int st_minute = Integer.valueOf(checkin_time.split(":")[1]);
+          int st_second = Integer.valueOf(checkin_time.split(":")[2]);
+          int lt_hour = Integer.valueOf(checkout_time.split(":")[0]);
+          int lt_minute = Integer.valueOf(checkout_time.split(":")[1]);
+          int lt_second = Integer.valueOf(checkout_time.split(":")[2]);
+          st.set(Calendar.HOUR, st_hour);
+          st.set(Calendar.MINUTE, st_minute);
+          st.set(Calendar.SECOND, st_second);
+          lt.set(Calendar.HOUR, lt_hour);
+          lt.set(Calendar.MINUTE, lt_minute);
+          lt.set(Calendar.SECOND, lt_second);
+          Date st_date = st.getTime();
+          Date lt_date = lt.getTime();
+          sub_hours = String.format("%.1f",(lt_date.getTime()-st_date.getTime())/1000/3600.0);
+      }
         String label =
-	String.format("%s    %s %s %s",
-		      record.getDate(), checkin_time, arrow, checkout_time);
+	String.format("%s    %s %s %s\n%s",
+		      record.getDate(), checkin_time, arrow, checkout_time, (sub_hours==null)?"":(sub_hours+" hours"));
       items.add(label);
     }
 
