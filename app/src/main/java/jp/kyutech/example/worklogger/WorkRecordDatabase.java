@@ -5,17 +5,17 @@
 
 package jp.kyutech.example.worklogger;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * WorkRecordDatabase class storing work hours in a SQLite database.
@@ -201,6 +201,13 @@ public class WorkRecordDatabase extends SQLiteOpenHelper
       // this block to delete a work record in the database.  The
       // method updateWorkRecord() could be a good example for
       // understanding how to operate the records of a database.
+        ContentValues values = toContentValues(record);
+        int nrows =
+               // db.update(TABLE_WORKRECORDS,
+               //         values,
+               //         FIELD_ID + " = ?",
+               //         new String[]{String.valueOf(record.getId())});
+            db.delete(TABLE_WORKRECORDS,FIELD_ID + " = ?",null);
     } finally {
       db.close();
     }
