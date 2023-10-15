@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity
     starterSwitch =
       new StarterSwitch(this, starterButton, recordManager);
     starterButton.setOnCheckedChangeListener(starterSwitch);
+
+    Button addWorkBtn = (Button)findViewById(R.id.addWorkBtn);
 
     if(savedInstanceState != null){
       onRestoreInstanceState(savedInstanceState);
