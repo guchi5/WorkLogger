@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity
     starterButton.setOnCheckedChangeListener(starterSwitch);
 
     Button addWorkBtn = (Button)findViewById(R.id.addWorkBtn);
-    addPrevWork = new AddPrevWork();
+    addPrevWork = new AddPrevWork(this, addWorkBtn);
+    addWorkBtn.setOnClickListener(addPrevWork);
 
     if(savedInstanceState != null){
       onRestoreInstanceState(savedInstanceState);
