@@ -3,6 +3,8 @@
     <string name="start_working">Start working</string>
     <string name="stop_working">Stop working</string>
 
+    <string name="add_work">Add work</string>
+
     <string name="dialog_alert_title">WorkLogger Error</string>
     <string name="dialog_alert_accept">OK</string>
 

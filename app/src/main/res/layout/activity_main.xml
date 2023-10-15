@@ -29,16 +29,33 @@
         style="?android:attr/imageButtonStyle"
         android:layout_width="65dp"
         android:layout_height="59dp"
-        android:layout_marginEnd="100dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="100dp"
         android:background="@drawable/starter_button"
         android:textAlignment="center"
         android:textOff="@string/start_working"
         android:textOn="@string/stop_working"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="93dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="28dp"
+        android:background="#004DAB"
+        android:text="@string/add_work"
+        android:textColor="#FFFFFF"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toTopOf="@+id/logList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/starterButton"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
