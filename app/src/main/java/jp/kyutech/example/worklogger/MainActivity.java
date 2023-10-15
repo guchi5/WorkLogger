@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity
   private StarterSwitch         starterSwitch = null;
   private LogLister             logLister = null;
   private Notifier              notifier = null;
+  private AddPrevWork           addPrevWork = null;
+
   // NOTE: Remember a current application state because Dialogs cannot
   // be created after stopped.
   private boolean               is_started_p = false;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     starterButton.setOnCheckedChangeListener(starterSwitch);
 
     Button addWorkBtn = (Button)findViewById(R.id.addWorkBtn);
+    addPrevWork = new AddPrevWork();
 
     if(savedInstanceState != null){
       onRestoreInstanceState(savedInstanceState);
