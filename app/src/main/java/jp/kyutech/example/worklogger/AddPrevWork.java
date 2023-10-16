@@ -8,6 +8,7 @@ import java.sql.Time;
 
 public class AddPrevWork implements View.OnClickListener{
     private MainActivity activity = null;
+    private AlertDialog alertDialog = null;
 
     public AddPrevWork(MainActivity mainActivity, Button btn){
         this.activity = mainActivity;
@@ -32,7 +33,7 @@ public class AddPrevWork implements View.OnClickListener{
     private void editTimeRecord()
     {
         final View editTimeView =
-                activity.getLayoutInflater().inflate(R.layout.time_editor, null, false);
+                activity.getLayoutInflater().inflate(R.layout.prev_time_editor, null, false);
         System.out.println("動作確認");
 /*
         final WorkRecord record = recordManager.getWorkRecordAt(list_position);
@@ -46,7 +47,7 @@ public class AddPrevWork implements View.OnClickListener{
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(R.drawable.worklogger_icon);
-        builder.setTitle(R.string.time_editor_title);
+        builder.setTitle(R.string.prev_time_editor_title);
         builder.setMessage("hello!");
         builder.setView(editTimeView);
 /*

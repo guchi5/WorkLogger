@@ -14,6 +14,14 @@
     <string name="time_editor_yes">Update</string>
     <string name="time_editor_cancel">Cancel</string>
 
+    <!-- Strings related to Prev Time Adder dialog -->
+    <string name="prev_time_editor_title">Add Previous Work Record</string>
+    <string name="prev_time_editor_edit_message_format">Edit a work record on %s</string>
+    <string name="prev_time_editor_yes">Add</string>
+    <string name="prev_time_editor_cancel">Cancel</string>
+
+
+
     <!-- Strings related to About dialog -->
     <string name="menu_app_about_title">About WorkLogger</string>
     <string name="app_about_description">
