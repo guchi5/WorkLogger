@@ -25,6 +25,7 @@ public class AddPrevWork implements View.OnClickListener{
     private ListView logList = null;
     private WorkRecordManager	recordManager = null;
     private ArrayList<String> last_items = null;
+    String sub_hours = null;
 
     public AddPrevWork(MainActivity activity,
                        ListView logList,
@@ -52,10 +53,27 @@ public class AddPrevWork implements View.OnClickListener{
             //int dummy = 1/0;
             System.out.println("Checkin : " + checkin_time);
             System.out.println("Checkout: " + checkout_time);
+            if(!checkin_time.equals("        ") && !checkout_time.equals("        ")){
+                Calendar st = GregorianCalendar.getInstance();
+                Calendar lt = GregorianCalendar.getInstance();
+                int st_hour = Integer.valueOf(checkin_time.split(":")[0]);
+                int st_minute = Integer.valueOf(checkin_time.split(":")[1]);
+                int st_second = Integer.valueOf(checkin_time.split(":")[2]);
+                int lt_hour = Integer.valueOf(checkout_time.split(":")[0]);
+                int lt_minute = Integer.valueOf(checkout_time.split(":")[1]);
+                int lt_second = Integer.valueOf(checkout_time.split(":")[2]);
+                st.set(Calendar.HOUR, st_hour);
+                st.set(Calendar.MINUTE, st_minute);
+                st.set(Calendar.SECOND, st_second);
+                lt.set(Calendar.HOUR, lt_hour);
+                lt.set(Calendar.MINUTE, lt_minute);
+                lt.set(Calendar.SECOND, lt_second);
+                sub_hours = String.format("%.1f",(lt.getTimeInMillis()-st.getTimeInMillis())/1000/3600.0);
+            }
 
             String label =
-                    String.format("%s    %s %s %s",
-                            record.getDate(), checkin_time, arrow, checkout_time);
+                    String.format("%s    %s %s %s\n%s",
+                            record.getDate(), checkin_time, arrow, checkout_time, (sub_hours==null)?"":(sub_hours+" hours"));
             items.add(label);
         }
 
