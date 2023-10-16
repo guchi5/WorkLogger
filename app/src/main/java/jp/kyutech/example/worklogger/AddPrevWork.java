@@ -69,21 +69,6 @@ public class AddPrevWork implements View.OnClickListener{
                 new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, items);
         logList.setAdapter(adapter);
     }
-    private void updateTimeRecord(WorkRecord record,
-                                  Time startTime, Time endTime)
-    {
-        if(!DateTimeUtils.isValidTimeRange(startTime, endTime)){
-            return;
-        }
-
-        if(startTime != null){
-            record.setCheckinTime(startTime);
-        }
-        if(endTime != null){
-            record.setCheckoutTime(endTime);
-        }
-        recordManager.updateWorkRecord(record);
-    }
 
     private Time getTimeOfButton(Button button)
     {
@@ -100,15 +85,6 @@ public class AddPrevWork implements View.OnClickListener{
     {
         final View editTimeView =
                 activity.getLayoutInflater().inflate(R.layout.prev_time_editor, null, false);
-/*
-        final WorkRecord record = recordManager.getWorkRecordAt(list_position);
-*/
-/*
-        final String message =
-                String.format(activity.getResources()
-                                .getString(R.string.time_editor_edit_message_format),
-                        record.getDateAsString());
-*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(R.drawable.worklogger_icon);
@@ -141,9 +117,13 @@ public class AddPrevWork implements View.OnClickListener{
                                 record.setDate(new Date(cal.getTimeInMillis()));
                                 record.setCheckinTime(startTime);
                                 record.setCheckoutTime(endTime);
-                                recordManager.addPrevWorkRecord(record);
-                                System.out.println("レコード追加："+record);
-                                updateListView();
+
+                                Calendar now = GregorianCalendar.getInstance();
+                                if(cal.getTimeInMillis() < now.getTimeInMillis()){
+                                    recordManager.addPrevWorkRecord(record);
+                                    System.out.println("レコード追加："+record);
+                                    updateListView();
+                                }
 
 
                             }
@@ -163,14 +143,6 @@ public class AddPrevWork implements View.OnClickListener{
         builder.create();
         alertDialog = builder.show();
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-
-        Button startButton = (Button)editTimeView.findViewById(R.id.startTimeButton);
-        Button endButton = (Button)editTimeView.findViewById(R.id.endTimeButton);
-/*
-        startButton.setText(record.getCheckinTimeAsString("        "));
-        endButton.setText(record.getCheckoutTimeAsString("        "));
-*/
-
     }
 
     void editStartTime(View view)
