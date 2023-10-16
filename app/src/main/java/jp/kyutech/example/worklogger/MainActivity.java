@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity
   private StarterSwitch         starterSwitch = null;
   private LogLister             logLister = null;
   private Notifier              notifier = null;
+  private AddPrevWork           addPrevWork = null;
+
   // NOTE: Remember a current application state because Dialogs cannot
   // be created after stopped.
   private boolean               is_started_p = false;
@@ -56,6 +59,10 @@ public class MainActivity extends AppCompatActivity
     starterSwitch =
       new StarterSwitch(this, starterButton, recordManager);
     starterButton.setOnCheckedChangeListener(starterSwitch);
+
+    Button addWorkBtn = (Button)findViewById(R.id.addWorkBtn);
+    addPrevWork = new AddPrevWork(this, logList, recordManager);
+    addWorkBtn.setOnClickListener(addPrevWork);
 
     if(savedInstanceState != null){
       onRestoreInstanceState(savedInstanceState);
@@ -204,6 +211,17 @@ public class MainActivity extends AppCompatActivity
     logLister.editEndTime(view);
   }
 
+  public void editPrevStartTime(View view){
+    addPrevWork.editStartTime(view);
+  }
+
+  public void editPrevEndTime(View view){
+    addPrevWork.editEndTime(view);
+  }
+
+  public void editPrevDate(View view){
+    addPrevWork.showDatePickerDialog(view);
+  }
   /*
    * Show an about dialog.
    */

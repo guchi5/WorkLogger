@@ -3,6 +3,8 @@
     <string name="start_working">Start working</string>
     <string name="stop_working">Stop working</string>
 
+    <string name="add_work">Add work</string>
+
     <string name="dialog_alert_title">WorkLogger Error</string>
     <string name="dialog_alert_accept">OK</string>
 
@@ -12,6 +14,17 @@
     <string name="time_editor_yes">Update</string>
     <string name="time_editor_cancel">Cancel</string>
     <string name="time_editor_delete">Delete</string>
+
+    <!-- Strings related to Prev Time Adder dialog -->
+    <string name="prev_time_editor_title">Add Previous Work Record</string>
+    <string name="prev_time_editor_edit_message_format">Edit a work record on %s</string>
+    <string name="prev_time_editor_yes">Add</string>
+    <string name="prev_time_editor_cancel">Cancel</string>
+    <string name="start_button">Start time</string>
+    <string name="end_button">End time</string>
+    <string name="date_button">Date</string>
+
+
 
     <!-- Strings related to About dialog -->
     <string name="menu_app_about_title">About WorkLogger</string>

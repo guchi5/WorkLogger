@@ -261,7 +261,7 @@ public class WorkRecordDatabase extends SQLiteOpenHelper
 
     String query =
       String.format("SELECT * FROM %s ORDER BY %s DESC",
-		    TABLE_WORKRECORDS, FIELD_ID);
+		    TABLE_WORKRECORDS, FIELD_DATE);
 
     SQLiteDatabase db = this.getWritableDatabase();
     try {
