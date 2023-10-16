@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   public void editPrevStartTime(View view){
-    addPrevWork.editEndTime(view);
+    addPrevWork.editStartTime(view);
   }
 
   public void editPrevEndTime(View view){
