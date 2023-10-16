@@ -211,6 +211,14 @@ public class MainActivity extends AppCompatActivity
     logLister.editEndTime(view);
   }
 
+  public void editPrevStartTime(View view){
+    addPrevWork.editEndTime(view);
+  }
+
+  public void editPrevEndTime(View view){
+    addPrevWork.editEndTime(view);
+  }
+
   /*
    * Show an about dialog.
    */

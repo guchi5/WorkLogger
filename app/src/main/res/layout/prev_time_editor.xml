@@ -14,7 +14,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="152dp"
         android:ems="10"
-        android:onClick="editStartTime"
+        android:onClick="editPrevStartTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:ems="10"
-        android:onClick="editEndTime"
+        android:onClick="editPrevEndTime"
         app:layout_constraintBottom_toBottomOf="@+id/startTimeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

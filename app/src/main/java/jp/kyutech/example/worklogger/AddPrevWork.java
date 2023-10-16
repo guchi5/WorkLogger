@@ -1,10 +1,15 @@
 package jp.kyutech.example.worklogger;
 
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TimePicker;
 
 import java.sql.Time;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class AddPrevWork implements View.OnClickListener{
     private MainActivity activity = null;
@@ -50,7 +55,6 @@ public class AddPrevWork implements View.OnClickListener{
         builder.setTitle(R.string.prev_time_editor_title);
         builder.setMessage("hello!");
         builder.setView(editTimeView);
-/*
         builder.setPositiveButton
                 (R.string.time_editor_yes,
                         new DialogInterface.OnClickListener()
@@ -67,8 +71,10 @@ public class AddPrevWork implements View.OnClickListener{
                                 Time endTime = getTimeOfButton(endButton);
 
 
+/*
                                 updateTimeRecord(record, startTime, endTime);
                                 updateListView();
+*/
 
 
                             }
@@ -84,20 +90,104 @@ public class AddPrevWork implements View.OnClickListener{
                                 // Nothing to do.
                             }
                         });
-*/
 
         builder.create();
-        builder.show();
-/*
         alertDialog = builder.show();
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
         Button startButton = (Button)editTimeView.findViewById(R.id.startTimeButton);
         Button endButton = (Button)editTimeView.findViewById(R.id.endTimeButton);
+/*
         startButton.setText(record.getCheckinTimeAsString("        "));
         endButton.setText(record.getCheckoutTimeAsString("        "));
 */
 
     }
+
+    void editStartTime(View view)
+    {
+        final Button acceptButton =
+                (Button)alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        final Button startButton =
+                (Button)alertDialog.findViewById(R.id.startTimeButton);
+        final Button endButton =
+                (Button)alertDialog.findViewById(R.id.endTimeButton);
+        final Time endTime = getTimeOfButton(endButton);
+        Time startTime = getTimeOfButton(startButton);
+        if(startTime == null){
+            Calendar cal = GregorianCalendar.getInstance();
+            startTime = new Time(cal.getTimeInMillis());
+        }
+
+        final TimePickerFragment timePicker = new TimePickerFragment();
+        timePicker.setTimeSetListener(new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker view, int hour, int minute)
+            {
+                Calendar cal = GregorianCalendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, hour);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                Time startTime = new Time(cal.getTimeInMillis());
+                startButton.setText(startTime.toString());
+
+                if(DateTimeUtils.isValidTimeRange(startTime, endTime)){
+                    acceptButton.setEnabled(true);
+                } else {
+                    acceptButton.setEnabled(false);
+                }
+            }
+        });
+        timePicker.setCurrentTime(startTime);
+        timePicker.show(activity.getSupportFragmentManager(), "TimePickerDialog");
+    }
+
+    /*
+     * Pop up a dialog to start editing an end time.
+     *
+     * @param list_position a position in a list from the top
+     */
+    void editEndTime(View view)
+    {
+        final Button acceptButton =
+                (Button)alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        final Button startButton =
+                (Button)alertDialog.findViewById(R.id.startTimeButton);
+        final Button endButton =
+                (Button)alertDialog.findViewById(R.id.endTimeButton);
+        final Time startTime = getTimeOfButton(startButton);
+        Time endTime = getTimeOfButton(endButton);
+        if(endTime == null){
+            Calendar cal = GregorianCalendar.getInstance();
+            endTime = new Time(cal.getTimeInMillis());
+        }
+
+        TimePickerFragment timePicker = new TimePickerFragment();
+        timePicker.setTimeSetListener(new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker view, int hour, int minute)
+            {
+                Calendar cal = GregorianCalendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, hour);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                Time endTime = new Time(cal.getTimeInMillis());
+                endButton.setText(endTime.toString());
+
+                if(DateTimeUtils.isValidTimeRange(startTime, endTime)){
+                    acceptButton.setEnabled(true);
+                } else {
+                    acceptButton.setEnabled(false);
+                }
+            }
+        });
+        timePicker.setCurrentTime(endTime);
+        timePicker.show(activity.getSupportFragmentManager(), "TimePickerDialog");
+    }
+
 
 }
