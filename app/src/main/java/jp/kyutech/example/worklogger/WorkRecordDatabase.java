@@ -5,17 +5,17 @@
 
 package jp.kyutech.example.worklogger;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * WorkRecordDatabase class storing work hours in a SQLite database.
@@ -254,7 +254,7 @@ public class WorkRecordDatabase extends SQLiteOpenHelper
 
     String query =
       String.format("SELECT * FROM %s ORDER BY %s DESC",
-		    TABLE_WORKRECORDS, FIELD_ID);
+		    TABLE_WORKRECORDS, FIELD_DATE);
 
     SQLiteDatabase db = this.getWritableDatabase();
     try {
