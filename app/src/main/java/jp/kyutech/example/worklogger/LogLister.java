@@ -20,7 +20,6 @@ import android.widget.TimePicker;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 class LogLister
@@ -92,9 +91,7 @@ class LogLister
           lt.set(Calendar.HOUR, lt_hour);
           lt.set(Calendar.MINUTE, lt_minute);
           lt.set(Calendar.SECOND, lt_second);
-          Date st_date = st.getTime();
-          Date lt_date = lt.getTime();
-          sub_hours = String.format("%.1f",(lt_date.getTime()-st_date.getTime())/1000/3600.0);
+          sub_hours = String.format("%.1f",(lt.getTimeInMillis()-st.getTimeInMillis())/1000/3600.0);
       }
         String label =
 	String.format("%s    %s %s %s\n%s",
