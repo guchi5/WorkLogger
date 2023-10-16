@@ -24,6 +24,7 @@ public class AddPrevWork implements View.OnClickListener{
     public void onClick(View view) {
         System.out.println("HELLO WORLD");
         editTimeRecord();
+
     }
 
     private Time getTimeOfButton(Button button)
@@ -58,7 +59,7 @@ public class AddPrevWork implements View.OnClickListener{
         builder.setMessage("hello!");
         builder.setView(editTimeView);
         builder.setPositiveButton
-                (R.string.time_editor_yes,
+                (R.string.prev_time_editor_yes,
                         new DialogInterface.OnClickListener()
                         {
                             @Override
@@ -82,7 +83,7 @@ public class AddPrevWork implements View.OnClickListener{
                             }
                         });
         builder.setNeutralButton
-                (R.string.time_editor_cancel,
+                (R.string.prev_time_editor_cancel,
                         new DialogInterface.OnClickListener()
                         {
                             @Override
@@ -114,6 +115,9 @@ public class AddPrevWork implements View.OnClickListener{
                 (Button)alertDialog.findViewById(R.id.startTimeButton);
         final Button endButton =
                 (Button)alertDialog.findViewById(R.id.endTimeButton);
+        final Button dateButton =
+                (Button)alertDialog.findViewById(R.id.dateButton);
+
         final Time endTime = getTimeOfButton(endButton);
         Time startTime = getTimeOfButton(startButton);
         if(startTime == null){
@@ -135,7 +139,7 @@ public class AddPrevWork implements View.OnClickListener{
                 Time startTime = new Time(cal.getTimeInMillis());
                 startButton.setText(startTime.toString());
 
-                if(DateTimeUtils.isValidTimeRange(startTime, endTime)){
+                if(DateTimeUtils.isValidTimeRange(startTime, endTime) && !dateButton.getText().toString().equals("")){
                     acceptButton.setEnabled(true);
                 } else {
                     acceptButton.setEnabled(false);
@@ -154,6 +158,9 @@ public class AddPrevWork implements View.OnClickListener{
                 (Button)alertDialog.findViewById(R.id.startTimeButton);
         final Button endButton =
                 (Button)alertDialog.findViewById(R.id.endTimeButton);
+        final Button dateButton =
+                (Button)alertDialog.findViewById(R.id.dateButton);
+
         final Time startTime = getTimeOfButton(startButton);
         Time endTime = getTimeOfButton(endButton);
         if(endTime == null){
@@ -175,7 +182,7 @@ public class AddPrevWork implements View.OnClickListener{
                 Time endTime = new Time(cal.getTimeInMillis());
                 endButton.setText(endTime.toString());
 
-                if(DateTimeUtils.isValidTimeRange(startTime, endTime)){
+                if(DateTimeUtils.isValidTimeRange(startTime, endTime) && !dateButton.getText().toString().equals("")){
                     acceptButton.setEnabled(true);
                 } else {
                     acceptButton.setEnabled(false);
@@ -189,12 +196,32 @@ public class AddPrevWork implements View.OnClickListener{
     public void showDatePickerDialog(View v) {
         final Button dateButton =
                 (Button)alertDialog.findViewById(R.id.dateButton);
+        final Button acceptButton =
+                (Button)alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        final Button startButton =
+                (Button)alertDialog.findViewById(R.id.startTimeButton);
+        final Button endButton =
+                (Button)alertDialog.findViewById(R.id.endTimeButton);
+
+        final Time startTime = getTimeOfButton(startButton);
+        Time endTime = getTimeOfButton(endButton);
+        if(endTime == null){
+            Calendar cal = GregorianCalendar.getInstance();
+            endTime = new Time(cal.getTimeInMillis());
+        }
 
         DatePickerFragment datePicker = new DatePickerFragment();
+        Time finalEndTime = endTime;
         datePicker.setDateSetListener(new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
                 dateButton.setText(String.format("%d-%d-%d",year, month, dayOfMonth));
+                if(DateTimeUtils.isValidTimeRange(startTime, finalEndTime) && !dateButton.getText().toString().equals("")){
+                    acceptButton.setEnabled(true);
+                    System.out.println("ボタン："+ finalEndTime);
+                } else {
+                    acceptButton.setEnabled(false);
+                }
             }
         });
         datePicker.show(activity.getSupportFragmentManager(), "datePicker");
