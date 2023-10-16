@@ -79,7 +79,11 @@ public class WorkRecordManager {
         }
         return record;
     }
-
+    public synchronized void addPrevWorkRecord(WorkRecord record){
+        if(record != null){
+            recdb.addWorkRecord(record);
+        }
+    }
     /*
      * Update a work record according to a boolean state.
      *

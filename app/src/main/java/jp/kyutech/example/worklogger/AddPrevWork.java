@@ -5,26 +5,84 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.TimePicker;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class AddPrevWork implements View.OnClickListener{
     private MainActivity activity = null;
     private AlertDialog alertDialog = null;
+    private ListView logList = null;
+    private WorkRecordManager	recordManager = null;
+    private ArrayList<String> last_items = null;
 
-    public AddPrevWork(MainActivity mainActivity, Button btn){
-        this.activity = mainActivity;
+    public AddPrevWork(MainActivity activity,
+                       ListView logList,
+                       WorkRecordManager recordManager){
+        this.activity = activity;
+        this.logList = logList;
+        this.recordManager = recordManager;
+
     }
     @Override
     public void onClick(View view) {
-        System.out.println("HELLO WORLD");
         editTimeRecord();
+        updateListView();
+    }
+    void updateListView()
+    {
+        List<WorkRecord> records = recordManager.getWorkRecords(31);
 
+        // Create a list of items to be displayed.
+        ArrayList<String> items = new ArrayList<>();
+        for(WorkRecord record : records){
+            String checkin_time = record.getCheckinTimeAsString("        ");
+            String checkout_time = record.getCheckoutTimeAsString("        ");
+            String arrow = (record.getCheckinTime()==null)?"  ":"=>";
+            //int dummy = 1/0;
+            System.out.println("Checkin : " + checkin_time);
+            System.out.println("Checkout: " + checkout_time);
+
+            String label =
+                    String.format("%s    %s %s %s",
+                            record.getDate(), checkin_time, arrow, checkout_time);
+            items.add(label);
+        }
+
+        if(items.equals(last_items)){
+            // No need to update a listView because nothing is updated.
+            return;
+        }
+        last_items = items;
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, items);
+        logList.setAdapter(adapter);
+    }
+    private void updateTimeRecord(WorkRecord record,
+                                  Time startTime, Time endTime)
+    {
+        if(!DateTimeUtils.isValidTimeRange(startTime, endTime)){
+            return;
+        }
+
+        if(startTime != null){
+            record.setCheckinTime(startTime);
+        }
+        if(endTime != null){
+            record.setCheckoutTime(endTime);
+        }
+        recordManager.updateWorkRecord(record);
     }
 
     private Time getTimeOfButton(Button button)
@@ -42,7 +100,6 @@ public class AddPrevWork implements View.OnClickListener{
     {
         final View editTimeView =
                 activity.getLayoutInflater().inflate(R.layout.prev_time_editor, null, false);
-        System.out.println("動作確認");
 /*
         final WorkRecord record = recordManager.getWorkRecordAt(list_position);
 */
@@ -70,14 +127,23 @@ public class AddPrevWork implements View.OnClickListener{
                                         (Button)editTimeView.findViewById(R.id.startTimeButton);
                                 Button endButton =
                                         (Button)editTimeView.findViewById(R.id.endTimeButton);
+                                Button dateButton =
+                                        (Button)alertDialog.findViewById(R.id.dateButton);
+
                                 Time startTime = getTimeOfButton(startButton);
                                 Time endTime = getTimeOfButton(endButton);
+                                Calendar cal = GregorianCalendar.getInstance();
+                                String[] data = dateButton.getText().toString().split("-");
+                                int[] date = Stream.of(data).mapToInt(Integer::parseInt).toArray();
+                                cal.set(date[0], date[1]-1, date[2]);
 
-
-/*
-                                updateTimeRecord(record, startTime, endTime);
+                                WorkRecord record = new WorkRecord();
+                                record.setDate(new Date(cal.getTimeInMillis()));
+                                record.setCheckinTime(startTime);
+                                record.setCheckoutTime(endTime);
+                                recordManager.addPrevWorkRecord(record);
+                                System.out.println("レコード追加："+record);
                                 updateListView();
-*/
 
 
                             }
@@ -215,10 +281,10 @@ public class AddPrevWork implements View.OnClickListener{
         datePicker.setDateSetListener(new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-                dateButton.setText(String.format("%d-%d-%d",year, month, dayOfMonth));
+                dateButton.setText(String.format("%d-%d-%d",year, month+1, dayOfMonth));
+                System.out.println("日付："+dateButton.getText().toString());
                 if(DateTimeUtils.isValidTimeRange(startTime, finalEndTime) && !dateButton.getText().toString().equals("")){
                     acceptButton.setEnabled(true);
-                    System.out.println("ボタン："+ finalEndTime);
                 } else {
                     acceptButton.setEnabled(false);
                 }
