@@ -1,10 +1,12 @@
 package jp.kyutech.example.worklogger;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import java.sql.Time;
@@ -144,11 +146,6 @@ public class AddPrevWork implements View.OnClickListener{
         timePicker.show(activity.getSupportFragmentManager(), "TimePickerDialog");
     }
 
-    /*
-     * Pop up a dialog to start editing an end time.
-     *
-     * @param list_position a position in a list from the top
-     */
     void editEndTime(View view)
     {
         final Button acceptButton =
@@ -187,6 +184,20 @@ public class AddPrevWork implements View.OnClickListener{
         });
         timePicker.setCurrentTime(endTime);
         timePicker.show(activity.getSupportFragmentManager(), "TimePickerDialog");
+    }
+
+    public void showDatePickerDialog(View v) {
+        final Button dateButton =
+                (Button)alertDialog.findViewById(R.id.dateButton);
+
+        DatePickerFragment datePicker = new DatePickerFragment();
+        datePicker.setDateSetListener(new DatePickerDialog.OnDateSetListener(){
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+                dateButton.setText(String.format("%d-%d-%d",year, month, dayOfMonth));
+            }
+        });
+        datePicker.show(activity.getSupportFragmentManager(), "datePicker");
     }
 
 

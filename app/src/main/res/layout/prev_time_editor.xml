@@ -38,6 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
         android:layout_marginBottom="61dp"
+        android:ems="10"
+        android:onClick="editPrevDate"
         app:layout_constraintBottom_toTopOf="@+id/startTimeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

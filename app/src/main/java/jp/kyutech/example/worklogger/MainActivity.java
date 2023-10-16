@@ -219,6 +219,9 @@ public class MainActivity extends AppCompatActivity
     addPrevWork.editEndTime(view);
   }
 
+  public void editPrevDate(View view){
+    addPrevWork.showDatePickerDialog(view);
+  }
   /*
    * Show an about dialog.
    */
