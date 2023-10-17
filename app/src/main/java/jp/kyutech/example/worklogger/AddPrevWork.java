@@ -25,7 +25,6 @@ public class AddPrevWork implements View.OnClickListener{
     private ListView logList = null;
     private WorkRecordManager	recordManager = null;
     private ArrayList<String> last_items = null;
-    String sub_hours = null;
 
     public AddPrevWork(MainActivity activity,
                        ListView logList,
@@ -47,6 +46,7 @@ public class AddPrevWork implements View.OnClickListener{
         // Create a list of items to be displayed.
         ArrayList<String> items = new ArrayList<>();
         for(WorkRecord record : records){
+            String sub_hours = null;
             String checkin_time = record.getCheckinTimeAsString("        ");
             String checkout_time = record.getCheckoutTimeAsString("        ");
             String arrow = (record.getCheckinTime()==null)?"  ":"=>";

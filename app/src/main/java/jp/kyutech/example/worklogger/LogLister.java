@@ -66,10 +66,11 @@ class LogLister
 
     // Create a list of items to be displayed.
     ArrayList<String> items = new ArrayList<>();
-    String sub_hours = null;
 
     for(WorkRecord record : records){
-      String checkin_time = record.getCheckinTimeAsString("        ");
+        String sub_hours = null;
+
+        String checkin_time = record.getCheckinTimeAsString("        ");
       String checkout_time = record.getCheckoutTimeAsString("        ");
       String arrow = (record.getCheckinTime()==null)?"  ":"=>";
       //int dummy = 1/0;
