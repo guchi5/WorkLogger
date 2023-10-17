@@ -107,7 +107,6 @@ public class AddPrevWork implements View.OnClickListener{
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(R.drawable.worklogger_icon);
         builder.setTitle(R.string.prev_time_editor_title);
-        builder.setMessage("hello!");
         builder.setView(editTimeView);
         builder.setPositiveButton
                 (R.string.prev_time_editor_yes,
