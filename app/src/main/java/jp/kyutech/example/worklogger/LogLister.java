@@ -63,7 +63,7 @@ class LogLister
   void updateListView()
   {
      List<WorkRecord> records = recordManager.getWorkRecords(31);
-
+    System.out.println("ログ数："+records.size());
     // Create a list of items to be displayed.
     ArrayList<String> items = new ArrayList<>();
 
@@ -100,10 +100,7 @@ class LogLister
       items.add(label);
     }
 
-    if(items.equals(last_items)){
-      // No need to update a listView because nothing is updated.
-      return;
-    }
+
     last_items = items;
 
     ArrayAdapter<String> adapter =
@@ -139,7 +136,7 @@ class LogLister
   private void deleteTimeRecord(WorkRecord record){
       // TODO deleteTimeRecordの実装
       recordManager.deleteWorkRecord(record);
-      Log.d(LOGTAG, "deleteの呼び出し");
+      Log.d(LOGTAG, "deleteの呼び出し＆削除完了受取");
   }
   private Time getTimeOfButton(Button button)
   {

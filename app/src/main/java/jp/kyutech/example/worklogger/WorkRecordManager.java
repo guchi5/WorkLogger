@@ -169,6 +169,7 @@ public class WorkRecordManager {
             return false;
         }
         recdb.deleteWorkRecord(record);
+        System.out.println("削除完了");
         return true;
     }
     /*

@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -16,7 +15,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class AddPrevWork implements View.OnClickListener{
@@ -37,57 +35,8 @@ public class AddPrevWork implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         editTimeRecord();
-        updateListView();
+        this.activity.updateView();
     }
-    void updateListView()
-    {
-        List<WorkRecord> records = recordManager.getWorkRecords(31);
-
-        // Create a list of items to be displayed.
-        ArrayList<String> items = new ArrayList<>();
-        for(WorkRecord record : records){
-            String sub_hours = null;
-            String checkin_time = record.getCheckinTimeAsString("        ");
-            String checkout_time = record.getCheckoutTimeAsString("        ");
-            String arrow = (record.getCheckinTime()==null)?"  ":"=>";
-            //int dummy = 1/0;
-            System.out.println("Checkin : " + checkin_time);
-            System.out.println("Checkout: " + checkout_time);
-            if(!checkin_time.equals("        ") && !checkout_time.equals("        ")){
-                Calendar st = GregorianCalendar.getInstance();
-                Calendar lt = GregorianCalendar.getInstance();
-                int st_hour = Integer.valueOf(checkin_time.split(":")[0]);
-                int st_minute = Integer.valueOf(checkin_time.split(":")[1]);
-                int st_second = Integer.valueOf(checkin_time.split(":")[2]);
-                int lt_hour = Integer.valueOf(checkout_time.split(":")[0]);
-                int lt_minute = Integer.valueOf(checkout_time.split(":")[1]);
-                int lt_second = Integer.valueOf(checkout_time.split(":")[2]);
-                st.set(Calendar.HOUR, st_hour);
-                st.set(Calendar.MINUTE, st_minute);
-                st.set(Calendar.SECOND, st_second);
-                lt.set(Calendar.HOUR, lt_hour);
-                lt.set(Calendar.MINUTE, lt_minute);
-                lt.set(Calendar.SECOND, lt_second);
-                sub_hours = String.format("%.1f",(lt.getTimeInMillis()-st.getTimeInMillis())/1000/3600.0);
-            }
-
-            String label =
-                    String.format("%s    %s %s %s\n%s",
-                            record.getDate(), checkin_time, arrow, checkout_time, (sub_hours==null)?"":(sub_hours+" hours"));
-            items.add(label);
-        }
-
-        if(items.equals(last_items)){
-            // No need to update a listView because nothing is updated.
-            return;
-        }
-        last_items = items;
-
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, items);
-        logList.setAdapter(adapter);
-    }
-
     private Time getTimeOfButton(Button button)
     {
         Time time = null;
@@ -139,7 +88,7 @@ public class AddPrevWork implements View.OnClickListener{
                                 if(cal.getTimeInMillis() < now.getTimeInMillis()){
                                     recordManager.addPrevWorkRecord(record);
                                     System.out.println("レコード追加："+record);
-                                    updateListView();
+                                    activity.updateView();
                                 }
 
 
