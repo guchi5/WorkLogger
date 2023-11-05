@@ -19,6 +19,9 @@ android {
         }
     }
     namespace 'jp.kyutech.example.worklogger'
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
 }
 
 dependencies {
